@@ -7,4 +7,7 @@ router
     .route('/')
     .get(eventController.getAllEvents);
 
+router
+    .route('/:id')
+    .get(eventController.getEventById);
 module.exports = router;

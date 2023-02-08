@@ -13,3 +13,16 @@ exports.getAllEvents = (req, res) => {
     });
 
 };
+
+exports.getEventById = (req, res) =>{
+
+    const id = req.params.id
+    const eventById = event.find(ob => ob.id === id);
+    
+    res.status(200).json({
+        status: "success",
+        data: {
+            event: eventById
+        }
+    });
+};
