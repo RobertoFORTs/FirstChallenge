@@ -12,7 +12,7 @@ getQuery = (req,res) => {
         for (let el of event){ //passing events that have the same date to a new array
             let temporary = new Date(el.dateTime);
             temporary = temporary.getUTCDay(); //returns 0 as sunday and 6 as saturday
-            if (week[temporary] === dayWeek.toString().toLowerCase()){ //compares for every object of data/event.js
+            if (week[temporary] === dayWeek.toString().toLowerCase()){ //compares for every object of data/event.json
                 events.push(el);
             }
         }

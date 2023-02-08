@@ -18,8 +18,8 @@ app.use(express.json());
 
 
 //Use routes
-
 //base route for events
 app.use('/api/v1/events', eventRoute);
+app.use('/api/v1/users',userRoute);
 
 module.exports = app;

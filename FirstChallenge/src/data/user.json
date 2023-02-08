@@ -1,7 +1,1 @@
-[
-    {
-
-
-    }
-
-]
+[{"firstName":"Roberto","lastName":"Fortes","birthDate":"2003-01-02","city":"Teresina","country":"Brasil","email":"email@gmail.com","password":"password123","confirmPassword":"password123"},{"firstName":"peter","lastName":"parker","birthDate":"2003-10-02","city":"NY","country":"EUA","email":"email12345@gmail.com","password":"password23","confirmPassword":"password23"},{"firstName":"felipe","lastName":"sobrenome","birthDate":"2003-01-017","city":"cidade123","country":"Brasil","email":"email123@gmail.com","password":"password1245","confirmPassword":"password1245"}]
