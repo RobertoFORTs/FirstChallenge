@@ -1,15 +1,17 @@
 const express = require('express');
 const morgan = require('morgan');
 
+
+
 //other imports incoming from routes
 ////
 const userRoute = require('./routes/userRoute');
 const eventRoute = require('./routes/eventRoute');
 
 
-const app = express.json();
+const app = express();
 
-app.use(express()); 
+app.use(express.json()); 
 
 //Using middlewares
 
@@ -17,4 +19,7 @@ app.use(express());
 
 //Use routes
 
-module.export = app;
+//base route for events
+app.use('/api/v1/events', eventRoute);
+
+module.exports = app;
