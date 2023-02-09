@@ -5,7 +5,8 @@ const router = express.Router();
 
 router //the getAllEvents also gets events by weekDay
     .route('/')
-    .get(eventController.getAllEvents);
+    .get(eventController.getAllEvents)
+    .post(eventController.createEvent);
 
 router
     .route('/:id')

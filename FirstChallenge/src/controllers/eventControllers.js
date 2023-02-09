@@ -52,3 +52,16 @@ exports.getEventById = (req, res) =>{
     });
     
 }
+
+exports.createEvent = (req, res)=>{
+    const newEvent = Object.assign(req.body);
+    event.push(newEvent);
+    fs.writeFile(`${__dirname}/./../data/event.json`, JSON.stringify(event), (err)=>{
+        res.status(201).json({
+            status:'success',
+            data : {
+                newEvent
+            }
+        });
+    });
+};

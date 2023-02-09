@@ -27,3 +27,15 @@ exports.signUserUp = (req,res) => {
         });
     });
 };
+
+exports.userSignIn = (req,res)=>{
+    res.status(201).json({
+        status:'success',
+        message: 'User has logged in',
+        data:
+            {
+            email: req.body.email,
+            password: '**********'
+            }
+    });
+};
