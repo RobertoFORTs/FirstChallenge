@@ -101,7 +101,28 @@ exports.deleteEventById = (req,res)=>{
 };
 
 exports.deleteEventsFromWeekday = (req, res) =>{
+    //getting the array of events to be excluded
+    const eventsOnWeekDay = translateQuerry(req,res);
 
-    const eventsOnWeekDay = translateQuerry
-    
+    //find those events on original file
+    const filteredArray = event.filter((el) => {
+            
+            if (!eventsOnWeekDay.find((obj) => obj === el)) //if the returned value in the find function is undefined, then we should filter that element to get the events that are not part of the weekDay
+            {
+                return el;
+            };
+
+        });
+
+    //writing file
+    fs.writeFile(`${__dirname}/./../data/event.json`, JSON.stringify(filteredArray), (err)=>{
+        res.status(500).json({
+            status: "success",
+            dataExcluded: eventsOnWeekDay,
+            data:{
+                event: filteredArray
+                }
+         });
+    });
+
 };
