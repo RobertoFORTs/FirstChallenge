@@ -7,7 +7,7 @@ router //the getAllEvents also gets events by weekDay
     .route('/')
     .get(eventController.getAllEvents) //planing on changing name of function to getEvents
     .post(eventController.createEvent)
-    
+    .delete(eventController.deleteEventsFromWeekday);
 
 router
     .route('/:id')
