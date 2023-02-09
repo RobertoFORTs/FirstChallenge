@@ -3,6 +3,8 @@ const eventController = require(`./../controllers/eventControllers`);
 
 const router = express.Router();
 
+router.param('id', eventController.checkId);
+
 router //the getAllEvents also gets events by weekDay
     .route('/')
     .get(eventController.getAllEvents) //planing on changing name of function to getEvents
