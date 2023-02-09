@@ -65,3 +65,26 @@ exports.createEvent = (req, res)=>{
         });
     });
 };
+
+exports.deleteEventById = (req,res)=>{
+    const excluded = event.find(el=> el.id === req.params.id);
+    for (el in event){
+        if (event[el].id===req.params.id){
+            event.splice(el,1);
+        }
+    }
+    fs.writeFile(`${__dirname}/./../data/event.json`, JSON.stringify(event), (err)=>{
+        res.status(500).json({
+        status: "success",
+        dataExcluded: excluded,
+        data:{
+            event: event
+            }
+        });
+    });
+    
+};
+
+exports.deleteEventsFromWeekday = (req, res) =>{
+
+};

@@ -5,11 +5,13 @@ const router = express.Router();
 
 router //the getAllEvents also gets events by weekDay
     .route('/')
-    .get(eventController.getAllEvents)
-    .post(eventController.createEvent);
+    .get(eventController.getAllEvents) //planing on changing name of function to getEvents
+    .post(eventController.createEvent)
+    
 
 router
     .route('/:id')
-    .get(eventController.getEventById);
+    .get(eventController.getEventById)
+    .delete(eventController.deleteEventById);
 
 module.exports = router;
