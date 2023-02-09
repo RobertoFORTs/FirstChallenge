@@ -3,6 +3,8 @@ const userController = require(`./../controllers/userControllers`);
 
 const router = express.Router();
 
+
+
 router
     .route('/signUp')   
     .post(userController.checkUserRegistration, userController.signUserUp); //falta fazer checagem de dados

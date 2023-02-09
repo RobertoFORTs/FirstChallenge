@@ -1,25 +1,42 @@
 //only needs to export the controllers  
 const fs = require('fs');
 
-
 const backup = JSON.parse(fs.readFileSync(`${__dirname}/./../data/user.json`));
 
-checkEmail = (req,res) =>{
-
+checkEmail = (req,res) =>{ //does the email exist?
+    if(backup.find(el => el.email === req.body.email)){ 
+        return res.status(400).json({
+            status: 'failed',
+            message: 'email in use'
+        });
+    }; //if email exists
 }
 
-checkPassword = (req,res) =>{
-
+checkPassword = (req,res) =>{ //Is the password right?
+    if(backup.find(el => el.password === req.body.password)){ 
+        return res.status(400).json({
+            status: 'failed',
+            message: 'password in use'
+        });; //if password exists
+    }
+    else if (req.body.password !== req.body.confirmPassword){
+        return res.status(400).json({
+            status: 'failed',
+            message: 'password doenst match confirmPassword'
+        }); //valid password and matches the confirm password
+    }
 }
 
 exports.checkUserRegistration = (req,res,next) => {
 
     if (!req.body.firstName||!req.body.lastName||!req.body.birthDate||!req.body.city||!req.body.country||!req.body.email||!req.body.password||!req.body.confirmPassword){ //maybe add a function to check types later
         
+        checkEmail(req,res);
+        checkPassword(req,res);
         return res.status(400).json({
-            status: 'failed',
-            message: 'missing required information'
-            });
+            status:'failed',
+            message: 'information filled incorrectly'
+        });
     }
     next();
 
@@ -27,6 +44,7 @@ exports.checkUserRegistration = (req,res,next) => {
 
 exports.checkUserLogin = (req,res,next) => {
     if (!req.body.email||!req.body.password){
+
         return res.status(400).json({
         status: 'failed',
         message: 'missing required information'
