@@ -47,26 +47,27 @@ exports.checkUserRegistration = (req,res,next) => {
 };
 
 exports.checkUserLogin = (req,res,next) => {
-    if (!req.body.email||!req.body.password){
+    if (!req.body.email||!req.body.password){ 
 
         return res.status(400).json({
         status: 'failed',
         message: 'missing required information'
         });
     }
+    else{
+        validUser = backup.find(el => el.email === req.body.email && el.password === req.body.password);
+        if (!validUser){ //if user not found
+            return res.status(404).json({
+                status: 'failed',
+                message: 'incorrect email and/or password'
+            });
+        }
+    }
     next();
 }
 
 
 exports.signUserUp = (req,res) => {
-    // if (backup.find(el => el.email === req.body.email)){ //user already exists
-    //     return res.json({
-    //         status: 'failed',
-    //         message: 'user already exists'
-    //     })
-    // }
-
-    //creating new user
 
     const newuser = Object.assign(req.body);
     backup.push(newuser);
