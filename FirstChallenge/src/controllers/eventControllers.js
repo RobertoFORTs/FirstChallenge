@@ -79,9 +79,12 @@ exports.getEventById = (req, res) =>{
     
 }
 
-exports.createEvent = (req, res)=>{ //got to add a way of generating random ids
-    const newEvent = Object.assign(req.body);
+exports.createEvent = (req, res)=>{ 
+    const newID = event[event.length - 1].id * 1 + 1;
+
+    const newEvent = Object.assign({newID}, req.body);
     event.push(newEvent);
+
     fs.writeFile(`${__dirname}/./../data/event.json`, JSON.stringify(event), (err)=>{
         res.status(201).json({
             status:'success',
