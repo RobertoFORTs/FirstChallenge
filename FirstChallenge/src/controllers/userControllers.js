@@ -31,12 +31,16 @@ exports.checkUserRegistration = (req,res,next) => {
 
     if (!req.body.firstName||!req.body.lastName||!req.body.birthDate||!req.body.city||!req.body.country||!req.body.email||!req.body.password||!req.body.confirmPassword){ //maybe add a function to check types later
         
-        checkEmail(req,res);
-        checkPassword(req,res);
+        
+
         return res.status(400).json({
             status:'failed',
             message: 'information filled incorrectly'
         });
+    }
+    else{
+        checkEmail(req,res);
+        checkPassword(req,res);
     }
     next();
 
