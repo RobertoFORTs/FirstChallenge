@@ -5,12 +5,12 @@ const router = express.Router();
 
 router
     .route('/signUp')   
-    .post(userController.signUserUp);
+    .post(userController.signUserUp); //falta fazer checagem de dados
 
 
 router
     .route('/signIn')
-    .post(userController.userSignIn);
+    .post(userController.userSignIn); //falta fazer checagem de dados
 
 
 module.exports = router;

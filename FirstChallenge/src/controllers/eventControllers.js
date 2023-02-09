@@ -5,6 +5,7 @@ const fs = require('fs');
 const event = JSON.parse(fs.readFileSync(`${__dirname}/./../data/event.json`));
 const week = ['sunday','monday','tuesday','wednesday','thursday','friday','saturday'];
 
+
 translateQuerry = (req,res) => { //function to translate the dateTime of the elements into a weekDay and return an array of the events listed on that weekDay
 
     const events = [];   //to store the final result
@@ -41,6 +42,16 @@ getEventsOnWeekDay = (req,res) => {
 };
 
 
+exports.checkBodyEvent = (req,res,next) =>{
+    if (!req.body.description ||!req.body.dateTime || !req.body.createdAt){
+        return res.status(400).json({
+            status: "failed",
+            message: "missing information"
+        });
+    }
+    next();
+};
+
 
 exports.getAllEvents = (req, res) => {
    
@@ -68,7 +79,7 @@ exports.getEventById = (req, res) =>{
     
 }
 
-exports.createEvent = (req, res)=>{
+exports.createEvent = (req, res)=>{ //got to add a way of generating random ids
     const newEvent = Object.assign(req.body);
     event.push(newEvent);
     fs.writeFile(`${__dirname}/./../data/event.json`, JSON.stringify(event), (err)=>{
