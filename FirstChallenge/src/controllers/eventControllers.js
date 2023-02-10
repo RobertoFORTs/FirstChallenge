@@ -52,7 +52,7 @@ getEventsOnWeekDay = (req,res) => {
 };
 
 exports.checkId= (req, res, next) => {
-    if (req.params.id*1 > event.length){
+    if (!event.find(el => el.id === req.params.id)){
         res.status(404).json({
             status: 'failed',
             message: 'id could not be found (invalid id)'
