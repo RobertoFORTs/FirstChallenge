@@ -32,24 +32,9 @@ translateQuerry = (req,res) => { //function to translate the dateTime of the ele
         }
     };
     return events;
-}
-
-getEventsOnWeekDay = (req,res) => {
-
-    if (req.query.dayOfTheWeek) //verify if it has a query
-    { 
-        const eventsOnWeekDay = translateQuerry(req,res);
-
-        return res.status(200).json({ //sending array of events
-            status: "success",
-            data:{
-                weekDay: req.query.dayOfTheWeek,
-                events: eventsOnWeekDay
-            }
-        });
-    }
-
 };
+
+
 
 exports.checkId= (req, res, next) => {
     if (!event.find(el => el.id === req.params.id)){
@@ -94,10 +79,26 @@ exports.checkBodyEvent = (req,res,next) =>{ //Later: add some validation for dat
     next();
 };
 
+exports.getEventsOnWeekDay = (req, res, next) => {
+
+    if (req.query.dayOfTheWeek) //verify if it has a query
+    { 
+        const eventsOnWeekDay = translateQuerry(req,res);
+
+        return res.status(200).json({ //sending array of events
+            status: "success",
+            data:{
+                weekDay: req.query.dayOfTheWeek,
+                events: eventsOnWeekDay
+            }
+        });
+    }
+    next();
+
+};
+
 
 exports.getAllEvents = (req, res) => {
-   
-    getEventsOnWeekDay(req,res); //verify and get events if there is a query, probably transform this to a middleware
 
     res.status(200).json({
         status: "success",
@@ -107,6 +108,8 @@ exports.getAllEvents = (req, res) => {
     });
 
 };
+
+
 
 exports.getEventById = (req, res) =>{
     const id = req.params.id;

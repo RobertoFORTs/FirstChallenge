@@ -5,10 +5,10 @@ const router = express.Router();
 
 router.param('id', eventController.checkId);
 
-router //the getAllEvents also gets events by weekDay
+router 
     .route('/')
-    .get(eventController.getAllEvents) //planing on changing name of function to getEvents
-    .post(eventController.checkBodyEvent, eventController.createEvent) //olhar como checar os dados a serem enviados
+    .get(eventController.getEventsOnWeekDay, eventController.getAllEvents) 
+    .post(eventController.checkBodyEvent, eventController.createEvent) 
     .delete(eventController.deleteEventsFromWeekday);
 
 router
