@@ -10,19 +10,18 @@ translateQuerry = (req,res) => { //function to translate the dateTime of the ele
 
     const events = [];   //to store the final result
     const dayOfTheWeek = req.query.dayOfTheWeek; //as day of the week
-
     for (let el of event){  //passing events that have the same date to a new array
         let temporary = new Date(el.dateTime);
-        temporary = temporary.getUTCDay(); //returns 0 as sunday and 6 as saturday
+        let dayIndex = temporary.getUTCDay(); //returns 0 as sunday and 6 as saturday
+        let currentDate = new Date();
         
-        if (week[temporary] === dayOfTheWeek.toString().toLowerCase()){ //compares for every object of data/event.json
+        //has to verify if it is on the week
+        if (week[dayIndex] === dayOfTheWeek.toString().toLowerCase() && temporary.getTime() >= currentDate.getTime() && temporary.getFullYear() === currentDate.getFullYear() && temporary.getMonth() === currentDate.getMonth() && temporary.getDate() - currentDate.getDate() < 7){ //gets the objects in that dayOfWeek
             events.push(el);
         }
-
-    }
+    };
     return events;
-
-};
+}
 
 getEventsOnWeekDay = (req,res) => {
 
@@ -41,7 +40,7 @@ getEventsOnWeekDay = (req,res) => {
 
 };
 
-exports.checkId= (req,res, next) => {
+exports.checkId= (req, res, next) => {
     if (req.params.id >= event.length){
         res.status(404).json({
             status: 'failed',
