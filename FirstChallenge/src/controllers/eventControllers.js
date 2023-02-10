@@ -124,8 +124,13 @@ exports.getEventById = (req, res) =>{
 }
 
 exports.createEvent = (req, res)=>{ 
-    const newID = (event[event.length - 1].id * 1) + 1;
-
+    let newID;
+    if (event.length == 0){
+        newID = 0;
+    }
+    else{
+        newID = (event[event.length - 1].id * 1) + 1;
+    }
     const newEvent = Object.assign({id: `${newID}`}, req.body);
     event.push(newEvent);
 
