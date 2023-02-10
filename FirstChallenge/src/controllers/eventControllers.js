@@ -6,6 +6,17 @@ const event = JSON.parse(fs.readFileSync(`${__dirname}/./../data/event.json`));
 const week = ['sunday','monday','tuesday','wednesday','thursday','friday','saturday'];
 
 
+dateIsValid = (value) =>{
+
+    const temp = new Date(value);
+    if (temp){
+        return temp;
+    }
+    return false;
+
+}
+
+
 translateQuerry = (req,res) => { //function to translate the dateTime of the elements into a weekDay and return an array of the events listed on that weekDay
 
     const events = [];   //to store the final result
@@ -64,6 +75,21 @@ exports.checkBodyEvent = (req,res,next) =>{ //Later: add some validation for dat
             status: "failed",
             message: "information filled incorrectly"
         })
+    }
+    else if(!dateIsValid(req.body.dateTime) || !dateIsValid(req.body.createdAt)){
+        return res.status(400).json({
+            status: "failed",
+            message: "invalid date"
+        });
+    }
+    else{
+        const currentDate = new Date(); //can only add a date if it is greater than te current date
+        if (dateIsValid(req.body.dateTime).getTime() < currentDate.getTime()){
+            return res.status(400).json({
+                status: 'failed',
+                message: 'invalid date'
+            });
+        }
     }
     next();
 };
