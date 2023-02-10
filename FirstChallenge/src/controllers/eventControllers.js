@@ -41,7 +41,7 @@ getEventsOnWeekDay = (req,res) => {
 };
 
 exports.checkId= (req, res, next) => {
-    if (req.params.id >= event.length){
+    if (req.params.id*1 > event.length){
         res.status(404).json({
             status: 'failed',
             message: 'id could not be found (invalid id)'
@@ -52,6 +52,7 @@ exports.checkId= (req, res, next) => {
 
 
 exports.checkBodyEvent = (req,res,next) =>{ //Later: add some validation for dateTime and createdAt
+                                            //should be always bigger than current date
     if (!req.body.description ||!req.body.dateTime || !req.body.createdAt){
         return res.status(400).json({
             status: "failed",
@@ -95,9 +96,9 @@ exports.getEventById = (req, res) =>{
 }
 
 exports.createEvent = (req, res)=>{ 
-    const newID = event[event.length - 1].id * 1 + 1;
+    const newID = (event[event.length - 1].id * 1) + 1;
 
-    const newEvent = Object.assign({newID}, req.body);
+    const newEvent = Object.assign({id: `${newID}`}, req.body);
     event.push(newEvent);
 
     fs.writeFile(`${__dirname}/./../data/event.json`, JSON.stringify(event), (err)=>{
@@ -111,25 +112,26 @@ exports.createEvent = (req, res)=>{
 };
 
 exports.deleteEventById = (req,res)=>{
-    const excluded = event.find(el=> el.id === req.params.id);
-    for (el in event){
+    const excluded = event.find(el => el.id === req.params.id);
+    for (let el in event){
         if (event[el].id===req.params.id){
             event.splice(el,1);
-        }
+        } 
     }
-    fs.writeFile(`${__dirname}/./../data/event.json`, JSON.stringify(event), (err)=>{
-        res.status(500).json({
-        status: "success",
-        dataExcluded: excluded,
-        data:{
-            event: event
-            }
-        });
+
+    fs.writeFile(`${__dirname}/./../data/event.json`, JSON.stringify(event), ()=>{});
+    
+    res.status(500).json({
+    status: "success",
+    dataExcluded: excluded,
+    data:{
+        event: event
+        }
     });
     
 };
 
-exports.deleteEventsFromWeekday = (req, res) =>{
+exports.deleteEventsFromWeekday = (req, res) =>{ //since this function also uses translateQuerry, it will also only delete the events from the weekday of the currentWeek
     //getting the array of events to be excluded
     const eventsOnWeekDay = translateQuerry(req,res);
 
