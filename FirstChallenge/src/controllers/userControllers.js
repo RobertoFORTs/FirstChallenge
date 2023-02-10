@@ -1,39 +1,31 @@
 //only needs to export the controllers  
 const fs = require('fs');
+
 const backup = JSON.parse(fs.readFileSync(`${__dirname}/./../data/user.json`));
 
 
 checkEmail = (req,res) =>{ //does the email exist?
     if(backup.find(el => el.email === req.body.email)){ 
-        return res.status(400).json({
-            status: 'failed',
-            message: 'email in use'
-        });
+        return false;
     }; //if email exists
-}
+    return true;
+};
 
 checkPassword = (req,res) =>{ //Is the password right?
     if(backup.find(el => el.password === req.body.password)){ 
-        return res.status(400).json({
-            status: 'failed',
-            message: 'password in use'
-        });; //if password exists
+        return false; //if password exists
     }
     else if (req.body.password !== req.body.confirmPassword){
-        return res.status(400).json({
-            status: 'failed',
-            message: 'password doenst match confirmPassword'
-        }); //valid password and matches the confirm password
+        return false; //valid password and matches the confirm password
     }
-}
+    return true;
+};
 
 checkString = (req,res) => {
     if ( !isNaN(req.body.firstName*1)||  !isNaN(req.body.lastName*1)||  !isNaN(req.body.city*1) ||  !isNaN(req.body.country*1) ||  !isNaN(req.body.birthDate*1)){ //verifies if fields are filled incorrectly
-        return res.status(400).json({
-            status: "failed",
-            message: "Invalid information"
-        });
+        return false;
     }
+    return true;
 };
 
 dateIsValid = (value) =>{
@@ -48,7 +40,7 @@ dateIsValid = (value) =>{
 
 exports.checkUserRegistration = (req,res,next) => {
 
-    if (!req.body.firstName||!req.body.lastName||!req.body.birthDate||!req.body.city||!req.body.country||!req.body.email||!req.body.password||!req.body.confirmPassword){ //Later: try to add new validation for birthDate
+    if (!req.body.firstName||!req.body.lastName||!req.body.birthDate||!req.body.city||!req.body.country||!req.body.email||!req.body.password||!req.body.confirmPassword || !checkString(req,res)){ //Later: try to add new validation for birthDate
 
         return res.status(400).json({
             status:'failed',
@@ -56,20 +48,22 @@ exports.checkUserRegistration = (req,res,next) => {
         });
     }
 
-    else{
-        checkEmail(req,res);
-        checkPassword(req,res);
-        checkString(req,res);
-        if (!dateIsValid(req.body.birthDate)){
+    else
+    {
+        if (!checkEmail(req,res) || !checkPassword(req,res) || !dateIsValid(req.body.birthDate))
+        {
             return res.status(400).json({
                 status: "failed",
-                message: "enter a valid birth date"
+                message: "Invalid email / password or date"
             });
         }
     }
-    next();
+    
+     next();
+}
+   
 
-};
+
 
 exports.checkUserLogin = (req,res,next) => {
     if (!req.body.email||!req.body.password){ 
