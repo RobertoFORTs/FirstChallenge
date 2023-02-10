@@ -1,7 +1,7 @@
 //only needs to export the controllers  
 const fs = require('fs');
-
 const backup = JSON.parse(fs.readFileSync(`${__dirname}/./../data/user.json`));
+
 
 checkEmail = (req,res) =>{ //does the email exist?
     if(backup.find(el => el.email === req.body.email)){ 
@@ -28,29 +28,44 @@ checkPassword = (req,res) =>{ //Is the password right?
 }
 
 checkString = (req,res) => {
-    if ( typeof req.body.firstName*1 !== 'string' || typeof req.body.lastName*1 !== 'string'|| typeof req.body.city*1!== 'string' || typeof req.body.country*1 !== 'string' || typeof req.body.birthDate !== 'string'){ //verifies if fields are filled incorrectly
-        res.status(400).json({
+    if ( !isNaN(req.body.firstName*1)||  !isNaN(req.body.lastName*1)||  !isNaN(req.body.city*1) ||  !isNaN(req.body.country*1) ||  !isNaN(req.body.birthDate*1)){ //verifies if fields are filled incorrectly
+        return res.status(400).json({
             status: "failed",
             message: "Invalid information"
         });
     }
 };
 
+dateIsValid = (value) =>{
+
+    const temp = new Date(value);
+    if (!isNaN(temp.getTime())){
+        return temp;
+    }
+    return false;
+
+};
+
 exports.checkUserRegistration = (req,res,next) => {
 
     if (!req.body.firstName||!req.body.lastName||!req.body.birthDate||!req.body.city||!req.body.country||!req.body.email||!req.body.password||!req.body.confirmPassword){ //Later: try to add new validation for birthDate
-        
-        
 
         return res.status(400).json({
             status:'failed',
             message: 'information filled incorrectly'
         });
     }
+
     else{
         checkEmail(req,res);
         checkPassword(req,res);
         checkString(req,res);
+        if (!dateIsValid(req.body.birthDate)){
+            return res.status(400).json({
+                status: "failed",
+                message: "enter a valid birth date"
+            });
+        }
     }
     next();
 

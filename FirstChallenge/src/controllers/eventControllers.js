@@ -9,12 +9,12 @@ const week = ['sunday','monday','tuesday','wednesday','thursday','friday','satur
 dateIsValid = (value) =>{
 
     const temp = new Date(value);
-    if (temp){
+    if (!isNaN(temp.getTime())){
         return temp;
     }
     return false;
 
-}
+};
 
 
 translateQuerry = (req,res) => { //function to translate the dateTime of the elements into a weekDay and return an array of the events listed on that weekDay
@@ -96,7 +96,6 @@ exports.getEventsOnWeekDay = (req, res, next) => {
     next();
 
 };
-
 
 exports.getAllEvents = (req, res) => {
 
