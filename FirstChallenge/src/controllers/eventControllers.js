@@ -51,12 +51,18 @@ exports.checkId= (req, res, next) => {
 };
 
 
-exports.checkBodyEvent = (req,res,next) =>{
+exports.checkBodyEvent = (req,res,next) =>{ //Later: add some validation for dateTime and createdAt
     if (!req.body.description ||!req.body.dateTime || !req.body.createdAt){
         return res.status(400).json({
             status: "failed",
             message: "missing information"
         });
+    }
+    else if(req.body.description.length <= 2 ){ //minimum message size
+        return res.status(400).json({
+            status: "failed",
+            message: "information filled incorrectly"
+        })
     }
     next();
 };
@@ -64,7 +70,7 @@ exports.checkBodyEvent = (req,res,next) =>{
 
 exports.getAllEvents = (req, res) => {
    
-    getEventsOnWeekDay(req,res); //verify and get events if there is a query
+    getEventsOnWeekDay(req,res); //verify and get events if there is a query, probably transform this to a middleware
 
     res.status(200).json({
         status: "success",

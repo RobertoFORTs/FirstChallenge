@@ -27,9 +27,18 @@ checkPassword = (req,res) =>{ //Is the password right?
     }
 }
 
+checkString = (req,res) => {
+    if ( typeof req.body.firstName*1 !== 'string' || typeof req.body.lastName*1 !== 'string'|| typeof req.body.city*1!== 'string' || typeof req.body.country*1 !== 'string' || typeof req.body.birthDate !== 'string'){ //verifies if fields are filled incorrectly
+        res.status(400).json({
+            status: "failed",
+            message: "Invalid information"
+        });
+    }
+};
+
 exports.checkUserRegistration = (req,res,next) => {
 
-    if (!req.body.firstName||!req.body.lastName||!req.body.birthDate||!req.body.city||!req.body.country||!req.body.email||!req.body.password||!req.body.confirmPassword){ //maybe add a function to check types later
+    if (!req.body.firstName||!req.body.lastName||!req.body.birthDate||!req.body.city||!req.body.country||!req.body.email||!req.body.password||!req.body.confirmPassword){ //Later: try to add new validation for birthDate
         
         
 
@@ -41,6 +50,7 @@ exports.checkUserRegistration = (req,res,next) => {
     else{
         checkEmail(req,res);
         checkPassword(req,res);
+        checkString(req,res);
     }
     next();
 
@@ -55,7 +65,7 @@ exports.checkUserLogin = (req,res,next) => {
         });
     }
     else{
-        validUser = backup.find(el => el.email === req.body.email && el.password === req.body.password);
+        validUser = backup.find(el => el.email === req.body.email && el.password === req.body.password); //tries to find a valid user
         if (!validUser){ //if user not found
             return res.status(404).json({
                 status: 'failed',
