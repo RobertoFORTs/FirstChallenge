@@ -25,6 +25,28 @@ To run this project, install locally usign npm:
 
 ```npm i express```
 
+Besides that, you can also install and use Postman to send requests:
+
+The routes used are:
+```/api/v1/events/```
+ * For getAllEvents(get request)
+ * For createEvent(post request)
+ 
+```/api/v1/events?dayOfTheWeek=xyz```
+ * For  getEventsOnWeekDay(get request)
+ * For deleteEventsFromWeekDay(delete request)
+  
+```/api/v1/events/:id```
+ *  For getEventById(get request) 
+ *  For deleteEventById(delete request)
+
+```/api/v1/users/signUp```
+ * For signUserUp(post request)
+  
+```/api/v1/users/signIn```
+ * For userSignIn(post request)
+ 
+
 ## Features
 * Get all events
 * Get events of week day(gets the events of the closest week day)
