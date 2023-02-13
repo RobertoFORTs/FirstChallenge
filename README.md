@@ -29,7 +29,7 @@ Besides that, you can also install and use Postman to send requests:
 
 The routes used are:
 
-```/api/v1/events/```
+```/api/v1/events```
  * For getAllEvents(get request)
  * For createEvent(post request)
  
