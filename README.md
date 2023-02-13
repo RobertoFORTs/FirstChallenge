@@ -48,7 +48,8 @@ The routes used are:
  * For userSignIn(post request)
 
 To start the project locally, please verify if you are located in the correct directory. If not, try:
-````cd src``` in the terminal
+
+```cd src``` in the terminal
 
 ## Features
 * Get all events
