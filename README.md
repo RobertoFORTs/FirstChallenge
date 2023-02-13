@@ -7,7 +7,7 @@
 * Features
 
 ## General Info
-A planner to organize the week of someone built. This is a training project to learn node.js and express
+A planner to organize the week of someone. This is a training project to learn node.js and express
 
 ## Technologies
 Project is created with:
