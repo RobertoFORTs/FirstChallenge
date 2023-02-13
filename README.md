@@ -3,8 +3,10 @@
 ## Table of Contents
 * General Info
 * Technologies
+* Deploy
 * Setup
 * Features
+
 
 ## General Info
 A planner to organize the week of someone. This is a training project to learn node.js and express
@@ -15,6 +17,9 @@ Project is created with:
 * node.js@18.13.0 
 * express@4.18.2
 * nodemon@2.0.20
+
+## Deploy
+https://firstchallenge-production.up.railway.app
 
 ## Setup
 Please see the appropriate guide for the enviroment of choice.
