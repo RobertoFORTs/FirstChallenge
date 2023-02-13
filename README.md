@@ -46,7 +46,9 @@ The routes used are:
   
 ```/api/v1/users/signIn```
  * For userSignIn(post request)
- 
+
+To start the project locally, please verify if you are located in the correct directory. If not, try:
+````cd src``` in the terminal
 
 ## Features
 * Get all events
