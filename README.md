@@ -21,8 +21,9 @@ Please see the appropriate guide for the enviroment of choice.
 
 To run this project, install locally usign npm:
 
-$ npm i nodemon
-$ npm i express
+```npm i nodemon```
+
+```npm i express```
 
 ## Features
 * Get all events
